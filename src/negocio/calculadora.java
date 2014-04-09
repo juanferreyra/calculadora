@@ -1,34 +1,74 @@
 package negocio;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-
-import presentacion.MainCalculator;
-
-public class calculadora
+public class Calculadora
 {
-	private ArrayList<String> _numeros;
-	private ArrayList<String> _operadores;
-	private float resultParcial;
+	private ArrayList<ItemACalcular> _ingresado;
+	private double _resultadoTotal;
 
-	public calculadora() 
+	public Calculadora() 
 	{
-		_numeros = new ArrayList<String>();
-		_operadores = new ArrayList<String>();
-		resultParcial = 0;
+		_ingresado = new ArrayList<ItemACalcular>();
+		ItemACalcular nuevo = new ItemACalcular();
+		_ingresado.add(nuevo);
+		_resultadoTotal = 0;
 	}
 	
-	public void agregarCalcular(ArrayList<String> numeros, ArrayList<String> operaciones ,String numero2)
+	public void agregarItem(String primerNumero, String segundoNumero, String operador)
 	{
-		
-	}
-	
-	public void verResultParcial()
-	{
-		for (int i = 0; i < _numeros.size(); i++) {
-			
+		if(_ingresado.size()==1)
+		{
+			_ingresado.get(0).setPrimerNumero(Double.parseDouble(primerNumero));
+			_ingresado.get(0).setSegundoNumero(Double.parseDouble(segundoNumero));
+			_ingresado.get(0).setOperador(operador);
 		}
+		else
+		{
+			int ultimo=  _ingresado.size()-1; 
+			_ingresado.get(ultimo).setSegundoNumero(Double.parseDouble(segundoNumero));
+			_ingresado.get(ultimo).setOperador(operador);
+		}
+		
+		ItemACalcular nuevo = new ItemACalcular();
+		_ingresado.add(nuevo);
+	}
+	
+	public void calcularTotal()
+	{
+		for (int i = 0; i < _ingresado.size()-1; i++) 
+		{
+			_ingresado.get(i).calcularParcial();
+			_resultadoTotal =_ingresado.get(i).getResultParcial();
+			_ingresado.get(i+1).setPrimerNumero(_resultadoTotal);
+		}
+	}
+	
+	public String getTotal()
+	{
+		return Double.toString(_resultadoTotal);
+	}
+	
+	public String toString()
+	{
+		String impresion = Double.toString(_ingresado.get(0).getPrimerNumero());
+		for (int i = 0; i < _ingresado.size(); i++) 
+		{
+			impresion+=_ingresado.get(i).toString();
+		}
+		return impresion;
+	}
+	
+	public static void main(String[] args) {
+Calculadora c = new Calculadora();
+		
+		c.agregarItem("1", "3", "+"); //1+3=4 parcial
+		c.agregarItem("", "3", "-"); //4-3=1 parcial
+		c.calcularTotal();
+		
+		System.out.println(c.toString()+"= "+c.getTotal());
 	}
 
 }

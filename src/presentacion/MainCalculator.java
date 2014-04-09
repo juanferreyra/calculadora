@@ -11,23 +11,26 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+
 import java.awt.Toolkit;
 import java.awt.Dialog.ModalExclusionType;
+
 import javax.swing.BorderFactory;
+
+import negocio.Calculadora;
+
 import java.awt.SystemColor;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 public class MainCalculator {
 
 	private JFrame frmCalculadora;
 	private JTextField jtf1;
 	private JTextField jtf2;
-	
-	private String calculoEnPantalla;
-	private ArrayList<String> calculoParaClase;
-	private char operandoActual;
+	private String operandoActual;
 	private Boolean ingresoComa;
+	private Calculadora calcu;
+	private Double numero1;
+	private Double numero2;
 
 	
 	/**
@@ -56,7 +59,8 @@ public class MainCalculator {
 			System.out.println("No encuentro en look and feel");
 			e.printStackTrace();
 		}
-		ingresoComa=false;
+		ingresoComa = false;
+		setOperandoActual("");
 		initialize();
 	}
 
@@ -64,6 +68,7 @@ public class MainCalculator {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		calcu = new Calculadora();
 		frmCalculadora = new JFrame();
 		frmCalculadora.setResizable(false);
 		frmCalculadora.setIconImage(Toolkit.getDefaultToolkit().getImage(MainCalculator.class.getResource("/img/calculator-icon.jpg")));
@@ -236,7 +241,7 @@ public class MainCalculator {
 		frmCalculadora.getContentPane().add(btnMas);
 		btnMas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				operandoActual = '+';
+				setOperandoActual("+");
 			}
 		});
 		
@@ -248,7 +253,7 @@ public class MainCalculator {
 		frmCalculadora.getContentPane().add(btnMenos);
 		btnMenos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				operandoActual = '-';
+				setOperandoActual("-");
 			}
 		});
 		
@@ -260,7 +265,7 @@ public class MainCalculator {
 		frmCalculadora.getContentPane().add(btnDividido);
 		btnDividido.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				operandoActual = '/';
+				setOperandoActual("/");
 			}
 		});
 		
@@ -272,7 +277,7 @@ public class MainCalculator {
 		frmCalculadora.getContentPane().add(btnPor);
 		btnPor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				operandoActual = '*';
+				setOperandoActual("*");
 			}
 		});
 		
@@ -390,5 +395,13 @@ public class MainCalculator {
 			return value;
 		else
 			return jtf2.getText()+value;
+	}
+
+	public String getOperandoActual() {
+		return operandoActual;
+	}
+
+	public void setOperandoActual(String operandoActual) {
+		this.operandoActual = operandoActual;
 	}
 }
