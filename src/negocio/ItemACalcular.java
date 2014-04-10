@@ -1,6 +1,6 @@
 package negocio;
 
-public class ItemACalcular {
+public class ItemACalcular implements Cloneable {
 
 	private double _primerNumero;
 	private double _segundoNumero;
@@ -11,8 +11,25 @@ public class ItemACalcular {
 	{
 		_primerNumero = 0 ;
 		_segundoNumero = 0 ;
-		_operador = "";
+		_operador = "+";
 		_resultadoItem =  0 ;
+	}
+	
+	//implemento la funcion que me clona el objeto para que se pueda guardar una copia cuando el usuario decida guardar variables de la calcu
+	@Override
+	protected Object clone() throws CloneNotSupportedException 
+	{
+		Object item = null;
+		try 
+		{
+			item = super.clone();
+		} 
+		catch (CloneNotSupportedException ex) 
+		{
+			System.out.println(" no se puede duplicar");
+		}
+		
+	   return item;
 	}
 	
 	public void setPrimerNumero(double primerNumero)

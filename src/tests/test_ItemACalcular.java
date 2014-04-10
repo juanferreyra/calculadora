@@ -17,7 +17,7 @@ public class test_ItemACalcular
 		
 		assertEquals(0.0 , i.getPrimerNumero(),0);
 		assertEquals(0.0 , i.getSegundoNumero(),0);
-		assertEquals("", i.getOperador());
+		assertEquals("+", i.getOperador());
 		assertEquals(0.0 , i.getResultParcial(),0);
 		
 	}

@@ -20,6 +20,8 @@ import javax.swing.BorderFactory;
 import negocio.Calculadora;
 
 import java.awt.SystemColor;
+import javax.swing.event.CaretListener;
+import javax.swing.event.CaretEvent;
 
 public class MainCalculator {
 
@@ -31,6 +33,8 @@ public class MainCalculator {
 	private Calculadora calcu;
 	private Double numero1;
 	private Double numero2;
+	private Boolean ingresandoOperador; //indica si agrego al item dentro de Calculadora;
+	private Boolean ingresandoNumero;//indica si agrego a la clase calculadora dentro de item el numero
 
 	
 	/**
@@ -60,7 +64,9 @@ public class MainCalculator {
 			e.printStackTrace();
 		}
 		ingresoComa = false;
-		setOperandoActual("");
+		ingresandoNumero=true;//inicializo como que esta agregando numero para que no agregue un operador antes;
+		ingresandoOperador=false;//inicio con que no esta agregando operador
+		operandoActual="";
 		initialize();
 	}
 
@@ -78,18 +84,14 @@ public class MainCalculator {
 		frmCalculadora.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmCalculadora.getContentPane().setLayout(null);
 		
+		
 		jtf1 = new JTextField("");
-		jtf1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
 		jtf1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		jtf1.setHorizontalAlignment(SwingConstants.RIGHT);
 		jtf1.setEditable(false);
 		jtf1.setBorder(BorderFactory.createLineBorder(Color.white));
 		jtf1.setBackground(Color.WHITE);
-		jtf1.setBounds(10, 11, 380, 35);
+		jtf1.setBounds(10, 11, 380, 26);
 		frmCalculadora.getContentPane().add(jtf1);
 		
 		jtf2 = new JTextField("0");
@@ -392,16 +394,29 @@ public class MainCalculator {
 	public String setearNumero(String value)
 	{
 		if(jtf2.getText().equals("0"))
+		{
+			ingresandoNumero=true;
+			ingresandoOperador=false;
 			return value;
+		}
 		else
+		{
+			ingresandoNumero=true;
+			ingresandoOperador=false;
 			return jtf2.getText()+value;
+		}
 	}
 
-	public String getOperandoActual() {
+	public String getOperandoActual() 
+	{
 		return operandoActual;
 	}
 
-	public void setOperandoActual(String operandoActual) {
+	public void setOperandoActual( String operandoActual) 
+	{
+		ingresandoOperador=true;
+		ingresandoNumero=false;
 		this.operandoActual = operandoActual;
+		jtf1.setText(calcu.toString());
 	}
 }
