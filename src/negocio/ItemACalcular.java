@@ -11,7 +11,7 @@ public class ItemACalcular implements Cloneable {
 	{
 		_primerNumero = 0 ;
 		_segundoNumero = 0 ;
-		_operador = "+";
+		_operador = "";
 		_resultadoItem =  0 ;
 	}
 	
@@ -70,7 +70,7 @@ public class ItemACalcular implements Cloneable {
 	public void calcularParcial()
 	{	
 		
-		if (_operador.equals("+"))
+		if (_operador.equals("+") || _operador.equals(""))
 		{
 			_resultadoItem = _primerNumero+_segundoNumero;
 		}

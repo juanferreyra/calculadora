@@ -1,6 +1,5 @@
 package negocio;
 
-
 import java.util.ArrayList;
 
 public class Calculadora
@@ -18,23 +17,6 @@ public class Calculadora
 		setGuardado(new ArrayList<ItemACalcular>());
 		_resultadoTotal = 0;
 	}
-	
-//	public void agregarItem(String primerNumero, String segundoNumero, String operador)
-//	{
-//		if(_ingresado.size()==1)
-//		{
-//			_ingresado.get(0).setPrimerNumero(Double.parseDouble(primerNumero));
-//			_ingresado.get(0).setSegundoNumero(Double.parseDouble(segundoNumero));
-//			_ingresado.get(0).setOperador(operador);
-//		}
-//		else
-//		{
-//			int ultimo=  _ingresado.size()-1; 
-//			_ingresado.get(ultimo).setSegundoNumero(Double.parseDouble(segundoNumero));
-//			_ingresado.get(ultimo).setOperador(operador);
-//		}
-//		
-//	}
 	
 	public void agregarNumero(String numero)
 	{
@@ -78,6 +60,8 @@ public class Calculadora
 	{
 		setGuardado((ArrayList<ItemACalcular>) _ingresado.clone());
 		_ingresado.clear();
+		ItemACalcular nuevo = new ItemACalcular();
+		_ingresado.add(nuevo);
 	}
 	
 	public ArrayList<ItemACalcular> getGuardado() 
@@ -90,34 +74,40 @@ public class Calculadora
 		this._guardado = _guardado;
 	}
 
-	
 	public static void main(String[] args) {
 		
 		Calculadora c = new Calculadora();
 		
-		//c.agregarItem("1", "3", "+"); //1+3=4 parcial
 		c.agregarNumero("1");
+		
 		c.agregarOperando("+");
+		
 		c.agregarNumero("3");
+		
 		c.agregarOperando("-");
+		
 		c.agregarNumero("4");
 		
-		//c.agregarItem("", "4", "-"); //4-3=1 parcial
 		c.calcularTotal();
 		
 		System.out.println("calculadora llena: "+c.toString()+"= "+c.getTotal());
 		
+		c.limpiarCalculadora();
 		
-		System.out.println(c._ingresado.get(0).getResultParcial());
-		//c.limpiarCalculadora();
+		System.out.println("calculadora limpia:"+c.toString());
 		
-		//System.out.println("calculadora limpia:"+c.toString());
-		
-		//System.out.println("lo guardado:"+c.getGuardado().toString());
-		
-	
+		System.out.println("lo guardado:"+c.getGuardado().toString());
 		
 	}
-
 	
+	
+	//ejemplo
+//	public void mostrarNumero(JTextField cuadroTexto, String numeroApretado)  //Muestra los numeros en la pantalla.
+//	{
+//		if(estaTipeandoNumero)
+//			cuadroTexto.setText(cuadroTexto.getText() + numeroApretado); //Concatena los digitos.
+//		else
+//			cuadroTexto.setText(numeroApretado); //Pone la pantalla en blanco para empezar a escribir otro numero.
+//	}
+
 }
